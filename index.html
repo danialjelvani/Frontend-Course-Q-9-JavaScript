@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>server</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="./output.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-neutral-800">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+
+        <script defer >
+            /*  fetch('/fetch-example/api-address', {
+                method: 'POST', // نوع درخواست (POST در اینجا برای ارسال داده)
+                body: myData,   // داده‌هایی که می‌خواهیم ارسال کنیم (می‌تواند جیسوم یا فرم‌دیتا باشد)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // تبدیل پاسخ به JSON
+                })
+                .then(data => {
+                    // در صورت موفقیت و دریافت پاسخ، داده‌ها اینجا پردازش می‌شوند
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    // در صورت وقوع خطا، خطا اینجا مدیریت می‌شود
+                    console.error('Error:', error);
+                });
+
+
+                fetch("https://api.example.com/data")
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error("Error:", error));
+            */
+
+            console.log("Fetching started...");
+
+            fetch('https://jsonplaceholder.typicode.com/posts/2')
+                .then((response) => {
+                    console.log("Received response:", response);
+                    console.log(response.headers.has("Content-Type"));
+                    console.log(response.headers.get('Content-Type'));
+                    if (response.ok) {
+                        return response.text(); // its plain text
+                    } else {
+                        throw Error(response.status);
+                    }
+                })
+                .then((text) => console.log("Response text:", text))
+                .catch((error) => console.log("Error:", error));
+
+            console.log("Fetching initiated...");
+
+
+            fetch('https://jsonplaceholder.typicode.com/posts/3')
+                .then((response) => {
+                    console.log("Received response:", response);
+                    if (response.ok) {
+                        return response.json(); // its exactly the same as response.text() but in form of an object
+                    } else {
+                        throw Error(response.status);
+                    }
+                })
+                .then((obj) => console.log("Response obj:", obj))
+                .catch((error) => console.log("Error:", error));
+
+
+            fetch('https://jsonplaceholder.typicode.com/content/3')
+                .then((response) => {
+                    console.log("Received response:", response);
+                    if (response.ok) {
+                        return response.json(); // its exactly the same as response.text() but in form of an object
+                    } else {
+                        throw Error(response.status);
+                    }
+                })
+                .then((obj) => console.log("Response obj:", obj)) // so here we can use obj.title or obj.body cause its an object
+                .catch((error) => console.log("Error:", error));
+
+
+                const mybody = {
+                    userId: 1,
+                    id: 456,
+                    title: 'myTitle',
+                    completed: false,
+                };
+
+                fetch('https://jsonplaceholder.typicode.com/todos', {
+                    method: 'POST',  // ارسال درخواست با متد POST
+                    headers: {
+                        'Content-Type': 'application/json',  // نوع محتوا
+                    },
+                    body: JSON.stringify(mybody),  // بدنه درخواست
+                })
+                    .then((response) => response.json())
+                    .then((data) => console.log("myResponse =", data))
+                    .catch((error) => console.error('Error:', error));
+
+
+
+                async function func() { // async functions return promise so we use .then & .catch
+                    return 10;
+                }
+
+                const p = func();
+                p.then((value) => console.log(value));
+                // نتیجه: 10
+
+
+
+                async function fetchData() { // this is exactly the same as the above codes but with async/await & try/catch
+                    try {
+                        let response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+                        let data = await response.json();
+                        console.log(data.id);
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                }
+
+                fetchData();
+
+        </script>
+    </body>
+</html>
